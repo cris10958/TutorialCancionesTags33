@@ -177,10 +177,10 @@ class Coleccion():
         busqueda = session.query(Interprete).filter(Interprete.nombre == nombre).all()
         if len(busqueda) == 0:
             if cancion_id > 0:
-                nuevoInterprete = Interprete(nombre=nombre, texto_curiosidades=texto_curiosidades, cancion=cancion_id)
+                nuevo_interprete = Interprete(nombre=nombre, texto_curiosidades=texto_curiosidades, cancion=cancion_id)
             else:
-                nuevoInterprete = Interprete(nombre=nombre, texto_curiosidades=texto_curiosidades)
-            session.add(nuevoInterprete)
+                nuevo_interprete = Interprete(nombre=nombre, texto_curiosidades=texto_curiosidades)
+            session.add(nuevo_interprete)
             session.commit()
             return True
         else:
