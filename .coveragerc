@@ -1,9 +1,18 @@
-# .coveragerc
+# .coveragerc to control coverage.py
 [run]
 branch = True
-source = src  # Ajusta esto a la ubicación de tu código fuente
+source = src
+# omit = bad_file.py
+
+[paths]
+source =
+    src/
+    */site-packages/
 
 [report]
+# Regexes for lines to exclude from consideration
 exclude_lines =
+    # Have to re-enable the standard pragma
     pragma: no cover
-    if __name__ == "__main__":  # O cualquier otra línea que desees excluir
+    # Don't complain if non-runnable code isn't run:
+    if __name__ == .__main__.:
