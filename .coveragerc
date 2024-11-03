@@ -1,5 +1,6 @@
 # .coveragerc to control coverage.py
 [run]
+relative_files = True
 branch = True
 source = src
 # omit = bad_file.py
@@ -10,6 +11,11 @@ source =
     */site-packages/
 
 [report]
+omit = 
+    */tests/*
+    */src/vista/*
+    */docs/*
+    setup.py
 # Regexes for lines to exclude from consideration
 exclude_lines =
     # Have to re-enable the standard pragma
