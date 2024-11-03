@@ -34,6 +34,7 @@ jobs:
         run: | 
           coverage xml -o coverage-reports/coverage.xml
           coverage html -d coverage-reports/htmlcov
+          ls -la coverage-reports/
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
