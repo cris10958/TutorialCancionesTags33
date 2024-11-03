@@ -24,11 +24,14 @@ jobs:
       - name: pruebas
         id: pruebas
         run: | 
-          python -m coverage run -m unittest discover tests 
+          python -m coverage run -m unittest discover tests
+      - name: Show coverage report in terminal
+        run: coverage report
       - name: coverage
         id: cov
         run: | 
-          coverage xml -o coverage-reports/coverage.xml 
+          coverage xml -o coverage-reports/coverage.xml
+          cat coverage-reports/coverage.xml
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
