@@ -45,7 +45,6 @@ class Coleccion():
             return False
 
     def dar_albumes(self):
-        albumes = [elem.__dict__ for elem in session.query(Album).all()]
         for album in albumes:
             album["interpretes"] = self.dar_interpretes_de_album(album["id"])
         return albumes
