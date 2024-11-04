@@ -214,10 +214,3 @@ class Coleccion():
         interpretes = [elem.__dict__ for elem in session.query(Interprete).filter(
             Interprete.nombre.ilike('%{0}%'.format(interprete_nombre))).all()]
         return interpretes
-    
-    def generar_cancion(condicion):
-        if(condicion):
-            nombre_cancion = 'Nueva cancion'
-        return nombre_cancion
-    
-    print(generar_cancion(False))

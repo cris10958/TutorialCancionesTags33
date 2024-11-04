@@ -265,11 +265,3 @@ class Ventana_Album(QWidget):
         self.interfaz.asociar_cancion(self.album_actual["id"], id_cancion)
         self.dialogo_agregar_cancion.close()
 
-    def generar_cancion(condicion):
-        if(condicion):
-            nombre_cancion = 'Nueva cancion'
-        return nombre_cancion
-    
-    print(generar_cancion(False))
-        
-
