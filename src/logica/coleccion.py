@@ -45,6 +45,7 @@ class Coleccion():
             return False
 
     def dar_albumes(self):
+        albumes = [elem.__dict__ for elem in session.query(Album).all()]
         for album in albumes:
             album["interpretes"] = self.dar_interpretes_de_album(album["id"])
         return albumes
@@ -213,3 +214,8 @@ class Coleccion():
         interpretes = [elem.__dict__ for elem in session.query(Interprete).filter(
             Interprete.nombre.ilike('%{0}%'.format(interprete_nombre))).all()]
         return interpretes
+    
+    def generar_cancion(self, condicion):
+        if(condicion):
+            nombre_cancion = 'Nueva cancion'
+        return nombre_cancion
