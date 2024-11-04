@@ -2,6 +2,7 @@ from src.modelo.album import Album, Medio
 from src.modelo.cancion import Cancion
 from src.modelo.declarative_base import engine, Base, session
 from src.modelo.interprete import Interprete
+from src.Error.Errror import MyCustomError
 
 
 class Coleccion():
@@ -41,7 +42,8 @@ class Coleccion():
             session.delete(album)
             session.commit()
             return True
-        except:
+        except MyCustomError as e:
+            print("Se ha producido un error en eliminar_album", e)
             return False
 
     def dar_albumes(self):
@@ -65,6 +67,19 @@ class Coleccion():
         albumes = [elem.__dict__ for elem in
                    session.query(Album).filter(Album.titulo.ilike('%{0}%'.format(album_titulo))).all()]
         return albumes
+
+    def nueva_cancion(self, titulo, minutos, segundos, compositor, interpretes):
+        interpretes_cancion = []
+        nueva_cancion = Cancion(titulo=titulo, minutos=minutos, segundos=segundos, compositor=compositor)
+        for item in interpretes:
+            interprete = Interprete(nombre=item["nombre"], texto_curiosidades=item["texto_curiosidades"],
+                                    cancion=nueva_cancion.id)
+            session.add(interprete)
+            interpretes_cancion.append(interprete)
+        nueva_cancion.interpretes = interpretes_cancion
+        session.add(nueva_cancion)
+        session.commit()
+        return True
 
     def agregar_cancion(self, titulo, minutos, segundos, compositor, album_id, interpretes):
         interpretes_cancion = []
@@ -90,16 +105,7 @@ class Coleccion():
                 else:
                     return False
             else:
-                nueva_cancion = Cancion(titulo=titulo, minutos=minutos, segundos=segundos, compositor=compositor)
-                for item in interpretes:
-                    interprete = Interprete(nombre=item["nombre"], texto_curiosidades=item["texto_curiosidades"],
-                                            cancion=nueva_cancion.id)
-                    session.add(interprete)
-                    interpretes_cancion.append(interprete)
-                nueva_cancion.interpretes = interpretes_cancion
-                session.add(nueva_cancion)
-                session.commit()
-                return True
+                return self.nueva_cancion(titulo, minutos, segundos, compositor, interpretes)
 
     def editar_cancion(self, cancion_id, titulo, minutos, segundos, compositor, interpretes):
         busqueda = session.query(Cancion).filter(Cancion.titulo == titulo, Cancion.id != cancion_id).all()
@@ -131,7 +137,8 @@ class Coleccion():
                 return True
             else:
                 return False
-        except:
+        except MyCustomError as e:
+            print("Se ha producido un error en eliminar_cancion:", e)
             return False
 
     def dar_canciones(self):
@@ -203,7 +210,8 @@ class Coleccion():
             session.delete(interprete)
             session.commit()
             return True
-        except:
+        except MyCustomError as e:
+            print("Se ha producido un error eliminar_interprete:", e)
             return False
 
     def dar_interpretes(self):
